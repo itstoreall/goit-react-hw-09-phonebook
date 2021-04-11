@@ -1,6 +1,6 @@
-# Phonebook
+# Homework #9
 
-## Homework #9 - Registr and Login
+## Phonebook Hooks (code refactoring)
 
 **_Use:_**
 

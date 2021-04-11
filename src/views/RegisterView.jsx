@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { authOperations } from '../redux/auth';
 import s from './Views.module.scss';
@@ -12,122 +12,90 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 
-class RegisterView extends Component {
-  state = {
-    name: '',
-    email: '',
-    password: '',
-    showPassword: false,
-  };
+const RegisterView = ({ onRegister }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-  handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value });
-  };
+  const handleChange = ({ target: { name, value } }) =>
+    name === 'name' ? setName(value) : setEmail(value);
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    this.props.onRegister(this.state);
+    onRegister({ name, email, password });
 
-    this.setState({ name: '', email: '', password: '' });
+    setEmail('');
+    setPassword('');
+    setShowPassword('');
+    setShowPassword(false);
   };
 
-  handlePasswordChange = (prop) => (event) => {
-    this.setState({ ...this.state, [prop]: event.target.value });
-  };
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = (event) => event.preventDefault();
 
-  handleClickShowPassword = () => {
-    this.setState({ ...this.state, showPassword: !this.state.showPassword });
-  };
+  return (
+    <div className={s.authFormWrap}>
+      <h1>Registration</h1>
 
-  handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+      <form onSubmit={handleSubmit} className={s.authForm} autoComplete='off'>
+        <TextField
+          id='name-outlined-basic'
+          label='Name'
+          variant='outlined'
+          className={s.authFormInput}
+          type='text'
+          name='name'
+          value={name}
+          onChange={handleChange}
+        />
 
-  render() {
-    const { name, email, password } = this.state;
+        <TextField
+          id='email-outlined-basic'
+          label='Email'
+          variant='outlined'
+          className={s.authFormInput}
+          type='email'
+          name='email'
+          value={email}
+          onChange={handleChange}
+        />
 
-    return (
-      <div className={s.authFormWrap}>
-        <h1>Registration</h1>
-
-        <form
-          onSubmit={this.handleSubmit}
-          className={s.authForm}
-          autoComplete='off'
-        >
-          <TextField
-            id='name-outlined-basic'
-            label='Name'
-            variant='outlined'
-            className={s.authFormInput}
-            type='text'
-            name='name'
-            value={name}
-            onChange={this.handleChange}
+        <FormControl className={s.authFormInput} variant='outlined'>
+          <InputLabel htmlFor='outlined-adornment-password'>
+            Password
+          </InputLabel>
+          <OutlinedInput
+            type={showPassword ? 'text' : 'password'}
+            onChange={handlePasswordChange}
+            id='outlined-adornment-password'
+            name='password'
+            value={password}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  aria-label='toggle password visibility'
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge='end'
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+            labelWidth={70}
           />
+        </FormControl>
 
-          <TextField
-            id='email-outlined-basic'
-            label='Email'
-            variant='outlined'
-            className={s.authFormInput}
-            type='email'
-            name='email'
-            value={email}
-            onChange={this.handleChange}
-          />
-
-          <FormControl
-            className={s.authFormInput}
-            // className={clsx(makeStyles.margin, makeStyles.textField)}
-            variant='outlined'
-          >
-            <InputLabel htmlFor='outlined-adornment-password'>
-              Password
-            </InputLabel>
-            <OutlinedInput
-              type={this.state.showPassword ? 'text' : 'password'}
-              // value={values.password}
-              onChange={this.handlePasswordChange('password')}
-              id='outlined-adornment-password'
-              // type='password'
-              name='password'
-              value={password}
-              // onChange={this.handleChange}
-              endAdornment={
-                <InputAdornment position='end'>
-                  <IconButton
-                    aria-label='toggle password visibility'
-                    onClick={this.handleClickShowPassword}
-                    onMouseDown={this.handleMouseDownPassword}
-                    edge='end'
-                  >
-                    {this.state.showPassword ? (
-                      <Visibility />
-                    ) : (
-                      <VisibilityOff />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              }
-              labelWidth={70}
-            />
-          </FormControl>
-
-          <Button
-            variant='contained'
-            className={s.authFormBtn}
-            type='submit'
-            // onClick={onLogout}
-          >
-            Register now
-          </Button>
-        </form>
-      </div>
-    );
-  }
-}
+        <Button variant='contained' className={s.authFormBtn} type='submit'>
+          Register now
+        </Button>
+      </form>
+    </div>
+  );
+};
 
 const mapDispatchToProps = {
   onRegister: authOperations.register,

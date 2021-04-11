@@ -1,13 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
-// import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
 import CancelIcon from '@material-ui/icons/Cancel';
 
 import s from './Contacts.module.scss';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   contactItemDivider: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
       fill: 'palevioletred',
     },
   },
-}));
+});
 
 const ContactItem = ({ contact: { id, name, number }, onDeleteContact }) => {
   const ms = useStyles();

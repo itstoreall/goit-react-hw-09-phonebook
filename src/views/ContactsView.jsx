@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import s from './Views.module.scss';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
     position: 'absolute',
     backgroundColor: 'transparent',
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     //   marginTop: theme.spacing(2),
     // },
   },
-}));
+});
 
 const ContactsView = ({ isLoading, getContacts }) => {
   const classes = useStyles();

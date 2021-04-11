@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-// import s from './AppBar.module.scss';
 import { NavLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 

@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => {
       paddingLeft: 5,
       height: 50,
       position: 'relative',
-      // borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.0),
 
       '&:hover': {
@@ -55,7 +54,6 @@ const useStyles = makeStyles((theme) => {
       width: '100%',
       '&:focus': {
         width: '100%',
-        // borderRadius: theme.shape.borderRadius,
       },
 
       [theme.breakpoints.up('sm')]: {
@@ -88,7 +86,6 @@ const Filter = ({ value, onChange }) => {
           onChange={onChange}
         />
       </div>
-      {/* </Toolbar> */}
     </>
   );
 };

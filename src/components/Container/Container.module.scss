@@ -1,0 +1,9 @@
+.Container {
+  margin-left: auto;
+  margin-right: auto;
+
+  @media screen and (min-width: 600px) {
+    min-height: 100vh;
+    width: 600px;
+  }
+}

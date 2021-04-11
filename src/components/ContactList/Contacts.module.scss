@@ -1,0 +1,27 @@
+// -------------------- Contact List
+.contactList {
+  padding: 0;
+  padding-right: 12px;
+  margin: 0;
+  height: 100%;
+  overflow: scroll;
+
+  .contactItemInfoWrap {
+    display: flex;
+    align-items: center;
+
+    & > ul > li {
+      font-size: 16px;
+      list-style: none;
+
+      @media screen and (min-width: 600px) {
+        font-size: 14px;
+      }
+
+      &:first-child {
+        margin-bottom: 5px;
+        font-weight: 700;
+      }
+    }
+  }
+}

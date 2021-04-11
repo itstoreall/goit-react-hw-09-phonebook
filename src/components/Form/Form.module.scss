@@ -1,0 +1,28 @@
+@import 'styles/shared.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    margin-bottom: 10px;
+  }
+}
+
+.formBtn {
+  width: 100%;
+  height: 45px;
+  text-decoration: none;
+  font-weight: 500;
+  color: $primaryWhiteColor;
+  background-color: $primaryBg;
+
+  &:hover {
+    background-color: $secondaryBg;
+    box-shadow: none;
+  }
+
+  &:focus {
+    box-shadow: $muiBtnFocusShadow;
+  }
+}

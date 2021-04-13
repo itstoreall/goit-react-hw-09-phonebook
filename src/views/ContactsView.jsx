@@ -1,6 +1,5 @@
-// import { Component } from 'react';
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { contactsOperations, contactsSelectors } from '../redux/contacts';
 import ContactForm from '../components/Form';
 import ContactList from '../components/ContactList';
@@ -20,12 +19,14 @@ const useStyles = makeStyles({
   },
 });
 
-const ContactsView = ({ isLoading, getContacts }) => {
+export default function ContactsView() {
+  const isLoading = useSelector(contactsSelectors.getLoading);
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {
-    getContacts();
-  }, [getContacts]);
+    dispatch(contactsOperations.GET());
+  }, [dispatch]);
 
   return (
     <div className={s.contactContainer}>
@@ -43,14 +44,4 @@ const ContactsView = ({ isLoading, getContacts }) => {
       </div>
     </div>
   );
-};
-
-const mapStateToProps = (state) => ({
-  isLoading: contactsSelectors.getLoading(state),
-});
-
-const mapDispatchToProps = {
-  getContacts: contactsOperations.GET,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactsView);
+}

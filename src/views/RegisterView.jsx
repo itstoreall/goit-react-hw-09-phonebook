@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { authOperations } from '../redux/auth';
 import s from './Views.module.scss';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,11 +12,12 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 
-const RegisterView = ({ onRegister }) => {
+export default function RegisterView() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const handleChange = ({ target: { name, value } }) =>
     name === 'name' ? setName(value) : setEmail(value);
@@ -24,7 +25,7 @@ const RegisterView = ({ onRegister }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onRegister({ name, email, password });
+    dispatch(authOperations.register({ name, email, password }));
 
     setEmail('');
     setPassword('');
@@ -95,10 +96,4 @@ const RegisterView = ({ onRegister }) => {
       </form>
     </div>
   );
-};
-
-const mapDispatchToProps = {
-  onRegister: authOperations.register,
-};
-
-export default connect(null, mapDispatchToProps)(RegisterView);
+}

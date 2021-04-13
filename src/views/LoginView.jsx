@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { authOperations } from '../redux/auth';
 import s from './Views.module.scss';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,17 +12,18 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 
-const LoginView = ({ onLogin }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function LoginView() {
+  const [email, setEmail] = useState('s@mail.net');
+  const [password, setPassword] = useState('qweqweqwe');
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const handleEmailChange = ({ target: { value } }) => setEmail(value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onLogin({ email, password });
+    dispatch(authOperations.logIn({ email, password }));
 
     setEmail('');
     setPassword('');
@@ -81,10 +82,4 @@ const LoginView = ({ onLogin }) => {
       </form>
     </div>
   );
-};
-
-const mapDispatchToProps = {
-  onLogin: authOperations.logIn,
-};
-
-export default connect(null, mapDispatchToProps)(LoginView);
+}

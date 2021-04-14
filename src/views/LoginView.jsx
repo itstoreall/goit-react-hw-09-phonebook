@@ -13,8 +13,8 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 
 export default function LoginView() {
-  const [email, setEmail] = useState('s@mail.net');
-  const [password, setPassword] = useState('qweqweqwe');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
 

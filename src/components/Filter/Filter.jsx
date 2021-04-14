@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { contactsSelectors, contactsActions } from '../../redux/contacts';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -66,8 +66,14 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const Filter = ({ value, onChange }) => {
+export default function Filter() {
+  const value = useSelector(contactsSelectors.getFilter);
+  const dispatch = useDispatch();
   const classes = useStyles();
+
+  const handleChangeFilter = (e) => {
+    dispatch(contactsActions.contactFilter(e.target.value));
+  };
 
   return (
     <>
@@ -83,19 +89,9 @@ const Filter = ({ value, onChange }) => {
           }}
           inputProps={{ 'aria-label': 'search' }}
           value={value}
-          onChange={onChange}
+          onChange={handleChangeFilter}
         />
       </div>
     </>
   );
-};
-
-const mapStateToProps = (state) => ({
-  value: contactsSelectors.getFilter(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onChange: (e) => dispatch(contactsActions.contactFilter(e.target.value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+}

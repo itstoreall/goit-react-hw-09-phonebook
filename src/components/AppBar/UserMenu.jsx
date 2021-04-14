@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { authSelectors, authOperations } from '../../redux/auth';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import defaultAvatar from './default-avatar.png';
 import s from './AppBar.module.scss';
 
 const useStyles = makeStyles({
@@ -23,8 +22,14 @@ const useStyles = makeStyles({
   },
 });
 
-const UserMenu = ({ email, onLogout }) => {
+export default function UserMenu() {
+  const email = useSelector(authSelectors.getUserEmail);
+  const dispatch = useDispatch();
   const ms = useStyles();
+
+  const onLogout = () => {
+    dispatch(authOperations.logOut());
+  };
 
   return (
     <div className={s.userMenuContainer}>
@@ -41,15 +46,4 @@ const UserMenu = ({ email, onLogout }) => {
       </Button>
     </div>
   );
-};
-
-const mapStateToProps = (state) => ({
-  email: authSelectors.getUserEmail(state),
-  avatar: defaultAvatar,
-});
-
-const mapDispatchToProps = {
-  onLogout: authOperations.logOut,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
+}

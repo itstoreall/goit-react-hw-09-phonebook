@@ -1,6 +1,6 @@
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { contactsOperations } from '../../redux/contacts';
+import { contactsOperations, contactsSelectors } from '../../redux/contacts';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -21,9 +21,11 @@ const useStyles = makeStyles({
   },
 });
 
-const ContactForm = ({ state, onSubmit }) => {
+export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const state = useSelector(contactsSelectors.getState);
+  const dispatch = useDispatch();
   const ms = useStyles();
 
   // Записывает значение инпута в стейт
@@ -56,10 +58,12 @@ const ContactForm = ({ state, onSubmit }) => {
 
     // Sending a new contact
     function newContact(name, number) {
-      onSubmit({
-        name: name,
-        number: number,
-      });
+      dispatch(
+        contactsOperations.ADD({
+          name: name,
+          number: number,
+        })
+      );
 
       setName('');
       setNumber('');
@@ -107,14 +111,4 @@ const ContactForm = ({ state, onSubmit }) => {
       </Button>
     </form>
   );
-};
-
-const mapStateToProps = (state) => ({
-  state: state,
-});
-
-const mapDispatchToProps = {
-  onSubmit: contactsOperations.ADD,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+}

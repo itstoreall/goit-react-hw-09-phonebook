@@ -1,9 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
 
 // Простые селекторы
-export const getLoading = state => state.contacts.loading;
-export const getFilter = state => state.contacts.filter;
-export const getAllContacts = state => state.contacts.items;
+export const getState = (state) => state;
+export const getLoading = (state) => state.contacts.loading;
+export const getFilter = (state) => state.contacts.filter;
+export const getAllContacts = (state) => state.contacts.items;
 
 // Композитный селектор
 export const getFilteredContects = createSelector(
@@ -12,9 +13,9 @@ export const getFilteredContects = createSelector(
     const normalizedFilter = filter.toLowerCase();
 
     return contacts.filter(({ name }) =>
-      name.toLowerCase().includes(normalizedFilter),
+      name.toLowerCase().includes(normalizedFilter)
     );
-  },
+  }
 );
 
 /**

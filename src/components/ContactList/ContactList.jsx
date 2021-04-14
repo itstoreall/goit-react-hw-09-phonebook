@@ -1,17 +1,26 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { contactsSelectors, contactsOperations } from '../../redux/contacts';
 import ContactItem from './ContactItem';
 import s from './Contacts.module.scss';
 
 // Презентационный компонент (без логики)
-const ContactList = ({ contacts, onDeleteContact }) => (
-  <ul className={s.contactList}>
-    {contacts.map((contact) => (
-      <ContactItem
-        key={contact.id}
-        contact={contact}
-        onDeleteContact={onDeleteContact}
-      />
-    ))}
-  </ul>
-);
+export default function ContactList() {
+  const contacts = useSelector(contactsSelectors.getFilteredContects);
+  const dispatch = useDispatch();
 
-export default ContactList;
+  const onDeleteContact = (id) => {
+    dispatch(contactsOperations.DELETE(id));
+  };
+
+  return (
+    <ul className={s.contactList}>
+      {contacts.map((contact) => (
+        <ContactItem
+          key={contact.id}
+          contact={contact}
+          onDeleteContact={onDeleteContact}
+        />
+      ))}
+    </ul>
+  );
+}
